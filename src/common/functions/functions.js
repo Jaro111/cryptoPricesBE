@@ -5,7 +5,7 @@ const api = process.env.CMC_API;
 const requestData = async (req, res, next) => {
   try {
     const url =
-      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=30";
+      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=50";
 
     const response = await fetch(url, {
       mode: "cors",
