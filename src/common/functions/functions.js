@@ -22,7 +22,7 @@ const requestData = async (req, res, next) => {
     res.status(500).json({ message: error.message, error: error });
   }
 };
-
+//
 //Request coin images
 const requestImages = async (req, res) => {
   try {
@@ -48,6 +48,7 @@ const requestImages = async (req, res) => {
     });
 
     const responseData = response.data;
+    console.log(responseData);
     const responseValues = Object.values(responseData);
     responseValues.map((item) => {
       logoObject[item.id] = {
@@ -66,6 +67,7 @@ const requestImages = async (req, res) => {
         name: item.name,
         symbol: item.symbol,
         logo: logoObject[item.id].logo,
+        platform: item.platform,
         quote: item.quote,
         rank: item.cmc_rank,
         supply: item.max_supply,
