@@ -1,5 +1,3 @@
-const { forEach } = require("mathjs");
-
 const api = process.env.CMC_API;
 // Request coin data
 const requestData = async (req, res, next) => {
