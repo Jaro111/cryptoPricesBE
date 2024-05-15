@@ -85,4 +85,102 @@ const requestImages = async (req, res) => {
     res.status(500).json({ message: error.message, error: error });
   }
 };
-module.exports = { requestData, requestImages };
+// Get coin ids and symbols for search
+const requestCoin = async (req, res) => {
+  try {
+    const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/map`;
+
+    const data = await fetch(url, {
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CMC_PRO_API_KEY": api,
+      },
+    });
+
+    const response = await data.json();
+
+    // res.status(200).json({ message: "message", response: response });
+    return response;
+  } catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+  }
+};
+
+// Get coin by id
+
+const requestById = async (req, res, next) => {
+  try {
+    const url = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?id=${req.body.id}`;
+
+    const response = await fetch(url, {
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CMC_PRO_API_KEY": api,
+      },
+    });
+
+    const dataObj = await response.json();
+    const data = Object.values(dataObj.data);
+
+    req.response = data;
+    // res.status(200).json({ message: "message", response: data });
+    next();
+  } catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+  }
+};
+
+const requestSingleImage = async (req, res) => {
+  try {
+    const data = req.response;
+    const id = data[0].id;
+
+    const url = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?id=${id}`;
+
+    const response = await fetch(url, {
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CMC_PRO_API_KEY": api,
+      },
+    }).then((response) => {
+      return response.json();
+    });
+
+    const responseData = response.data;
+    const responseValues = Object.values(responseData);
+    console.log(responseValues);
+    const coinData = {
+      id: data[0].id,
+      name: data[0].name,
+      symbol: data[0].symbol,
+      logo: responseValues[0].logo,
+      platform: data[0].platform,
+      quote: data[0].quote,
+      rank: data[0].cmc_rank,
+      supply: data[0].max_supply,
+      circ_supply: data[0].circulating_supply,
+      total_supply: data[0].total_supply,
+      tags: responseValues[0].tags,
+      meta: {
+        description: responseValues[0].description,
+        tagNames: responseValues[0]["tag-names"],
+        urls: responseValues[0].urls,
+        contractAdress: responseValues[0].contract_address,
+      },
+    };
+    res.status(200).json({ message: "message", response: coinData });
+  } catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+  }
+};
+
+https: module.exports = {
+  requestData,
+  requestImages,
+  requestCoin,
+  requestById,
+  requestSingleImage,
+};
