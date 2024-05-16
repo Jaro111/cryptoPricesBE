@@ -1,4 +1,5 @@
 const api = process.env.CMC_API;
+// --------------------------------------------------------------------------------------------------------------------------------------
 // Request coin data
 const requestData = async (req, res, next) => {
   try {
@@ -21,6 +22,7 @@ const requestData = async (req, res, next) => {
   }
 };
 //
+// --------------------------------------------------------------------------------------------------------------------------------------
 //Request coin images
 const requestImages = async (req, res) => {
   try {
@@ -85,6 +87,8 @@ const requestImages = async (req, res) => {
     res.status(500).json({ message: error.message, error: error });
   }
 };
+//
+// --------------------------------------------------------------------------------------------------------------------------------------
 // Get coin ids and symbols for search
 const requestCoin = async (req, res) => {
   try {
@@ -100,13 +104,15 @@ const requestCoin = async (req, res) => {
 
     const response = await data.json();
 
-    // res.status(200).json({ message: "message", response: response });
+    res.status(200).json({ message: "message", response: response });
     return response;
   } catch (error) {
     res.status(500).json({ message: error.message, error: error });
   }
 };
-
+//
+//
+// --------------------------------------------------------------------------------------------------------------------------------------
 // Get coin by id
 
 const requestById = async (req, res, next) => {
@@ -184,3 +190,4 @@ https: module.exports = {
   requestById,
   requestSingleImage,
 };
+//
