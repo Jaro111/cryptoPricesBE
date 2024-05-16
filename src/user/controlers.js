@@ -26,4 +26,18 @@ const getUsers = async (req, res) => {
   }
 };
 
-module.exports = { signupUser: signupUser, getUsers: getUsers };
+// Log in
+
+const logIn = async (req, res) => {
+  try {
+    res
+      .status(200)
+      .json({
+        message: `${req.user.username} Successfull logged in`,
+        user: req.user,
+      });
+  } catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+  }
+};
+module.exports = { signupUser: signupUser, getUsers: getUsers, logIn: logIn };
