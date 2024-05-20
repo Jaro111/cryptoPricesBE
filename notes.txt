@@ -1,23 +1,22 @@
 const bcrypt = require("bcrypt");
 
-const User = require("../user/model");
+const User = require("../users/model");
 
-const saltRounds = parseInt(process.eventNames.SALT_ROUNDS);
+const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
-// Hash pass
-
+// Hash password
 const hashPass = async (req, res, next) => {
   try {
-    const hashpassword = await bcrypt.hash(req.body.password, saltRounds);
-    req.body.password = hashpassword;
+    const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
+    req.body.password = hashPassword;
     console.log("password: ", req.body.password);
     next();
   } catch (error) {
-    res.status(500).json({ message: error.message, error: error });
+    res.status(501).json({ message: error.message, error: error });
   }
 };
 
-// compare psss
+// COMPARE PASSWORD
 
 const comparePass = async (req, res, next) => {
   try {
@@ -26,20 +25,20 @@ const comparePass = async (req, res, next) => {
         username: req.body.username,
       },
     });
-    // console.log(user);
     const myPassword = user.dataValues.password;
+    console.log(myPassword);
 
     const checkPassword = await bcrypt.compare(req.body.password, myPassword);
-    console.log(checkPassword);
 
     if (!checkPassword) {
       res.status(401).json({ message: "Wrong password" });
+      return;
     }
     req.user = user;
     next();
   } catch (error) {
-    res.status(500).json({ message: error.message, error: error });
+    res.status(501).json({ message: error.message, error: error });
   }
 };
 
-module.exports = { hashPass, comparePass };
+module.exports = { hashPass: hashPass, comparePass: comparePass };
