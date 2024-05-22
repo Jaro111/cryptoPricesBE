@@ -7,10 +7,6 @@ const Coin = sequelize.define("Coin", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  symbol: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
 });
 
 module.exports = Coin;

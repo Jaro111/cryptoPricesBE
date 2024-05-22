@@ -1,4 +1,6 @@
 const User = require("./model");
+const Coin = require("../Coin/model");
+const BuyDetails = require("../buyDetails/model");
 
 // Signup user
 const signupUser = async (req, res) => {

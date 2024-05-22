@@ -6,6 +6,7 @@ const {
   requestCoin,
   requestById,
   requestSingleImage,
+  requestMultiple,
 } = require("../functions/functions");
 
 const commonRouter = Router();
@@ -19,7 +20,7 @@ commonRouter.get("/getCoinIds", requestCoin);
 // getSingleCoin
 commonRouter.post("/getSingleCoin", requestById, requestSingleImage);
 
-// // GetImages
-// commonRouter.post("/getLogo", requestImages);
+// get multiple Coins by id
+commonRouter.post("/getMultipleCoin", requestMultiple, requestImages);
 
 module.exports = commonRouter;

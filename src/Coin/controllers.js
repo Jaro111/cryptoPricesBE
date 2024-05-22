@@ -14,7 +14,6 @@ const addCoin = async (req, res) => {
     if (coin === null) {
       const coin = await Coin.create({
         coinId: req.body.coinId,
-        symbol: req.body.symbol,
         UserId: req.body.UserId,
       });
       res.status(200).json({ message: "Success", coin: coin });
@@ -28,7 +27,7 @@ const addCoin = async (req, res) => {
 
 const getCoins = async (req, res) => {
   try {
-    const coins = await Coin.findAll({ where: { UserId: req.body.UserId } });
+    const coins = await Coin.findAll();
 
     res.status(200).json({ message: "Coins uploaded", coins: coins });
   } catch (error) {
