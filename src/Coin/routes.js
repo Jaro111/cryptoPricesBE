@@ -10,6 +10,6 @@ coinRouter.post("/coin/addCoin", addCoin);
 
 // get coins
 
-coinRouter.get("/coin/getCoins", getCoins);
+coinRouter.post("/coin/getCoins", getCoins);
 
 module.exports = coinRouter;

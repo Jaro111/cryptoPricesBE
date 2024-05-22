@@ -5,7 +5,7 @@ const requestData = async (req, res, next) => {
   try {
     const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=${req.body.start}&limit=${req.body.limit}`;
 
-    const response = await fetch(url, {
+    const res = await fetch(url, {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
@@ -15,6 +15,7 @@ const requestData = async (req, res, next) => {
       return response.json();
     });
     // res.status(200).json({ message: "message", response: response });
+    const response = res.data;
     req.response = response;
     next();
   } catch (error) {
@@ -26,7 +27,7 @@ const requestData = async (req, res, next) => {
 //Request coin images
 const requestImages = async (req, res) => {
   try {
-    const data = req.response.data;
+    const data = req.response;
     let idArray = [];
     logoObject = {};
     console.log(data);
@@ -183,11 +184,37 @@ const requestSingleImage = async (req, res) => {
   }
 };
 
+// get multiple coins by id
+
+const requestMultiple = async (req, res, next) => {
+  try {
+    const url = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?id=${req.body.id}`;
+
+    const res = await fetch(url, {
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CMC_PRO_API_KEY": api,
+      },
+    });
+
+    const data = await res.json();
+    const ObjData = data.data;
+    const response = Object.values(ObjData);
+    req.response = response;
+    next();
+    // res.status(200).json({ message: "message", response: dataObj });
+  } catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+  }
+};
+
 https: module.exports = {
   requestData,
   requestImages,
   requestCoin,
   requestById,
   requestSingleImage,
+  requestMultiple,
 };
 //
