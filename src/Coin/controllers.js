@@ -27,7 +27,10 @@ const addCoin = async (req, res) => {
 
 const getCoins = async (req, res) => {
   try {
-    const coins = await Coin.findAll();
+    const coins = await Coin.findAll({
+      where: { UserId: req.body.UserId },
+      include: "User",
+    });
 
     res.status(200).json({ message: "Coins uploaded", coins: coins });
   } catch (error) {
