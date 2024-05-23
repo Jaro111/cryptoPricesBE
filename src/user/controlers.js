@@ -41,7 +41,7 @@ const logIn = async (req, res) => {
 
       res
         .status(200)
-        .json({ message: "Persistant log in succesfull", users: user });
+        .json({ message: "Persistant log in succesfull", user: user });
       return;
     }
     const token = await jwt.sign({ id: req.user.id }, process.env.SECRET);
@@ -51,9 +51,20 @@ const logIn = async (req, res) => {
       username: req.user.username,
       token: token,
     };
-    res.status(200).json({ message: "Log In succesfull", users: user });
+    res.status(200).json({ message: "Log In succesfull", user: user });
   } catch (error) {
     res.status(500).json({ message: error.message, error: error });
   }
 };
 module.exports = { signupUser: signupUser, getUsers: getUsers, logIn: logIn };
+
+// const logIn = async (req, res) => {
+//   try {
+//     res.status(200).json({
+//       message: `${req.user.username} Successfull logged in`,
+//       user: req.user,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message, error: error });
+//   }
+// };

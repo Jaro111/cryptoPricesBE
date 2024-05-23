@@ -15,6 +15,6 @@ userRouter.get("/user/getUsers", getUsers);
 userRouter.post("/user/logIn", comparePass, logIn);
 
 // token check
-userRouter.get("/users/authCheck", tokenCheck, logIn);
+userRouter.get("/user/authCheck", tokenCheck, logIn);
 
 module.exports = userRouter;
