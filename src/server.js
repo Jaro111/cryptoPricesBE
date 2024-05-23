@@ -29,22 +29,6 @@ const syncTables = () => {
   BuyDetails.belongsTo(Coin);
   BuyDetails.belongsTo(User);
 
-  // Coin.hasOne(BuyDetails);
-  // BuyDetails.belongsToMany(Coin, {
-  //   through: "Coin",
-  //   foreignKey: "coinId",
-  // });
-  // BuyDetails.has(User,B {
-  //   through: "User",
-
-  // });
-
-  // Product.belongsToMany(Category, {
-  //   through: "product_categories",
-  //   foreignKey: "objectId", // replaces `productId`
-  //   otherKey: "typeId", // replaces `categoryId`
-  // });
-
   User.sync();
   Coin.sync();
   BuyDetails.sync();
