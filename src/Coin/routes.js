@@ -8,7 +8,7 @@ const { addCoin, getCoins } = require("./controllers");
 
 coinRouter.post("/coin/addCoin", addCoin);
 
-// get coins
+// get coins by user id
 
 coinRouter.post("/coin/getCoins", getCoins);
 

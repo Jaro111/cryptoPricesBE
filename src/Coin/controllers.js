@@ -1,7 +1,7 @@
 const Coin = require("./model");
 const User = require("../user/model");
 
-// addCoin
+// addCoin to portfolio
 
 const addCoin = async (req, res) => {
   try {
@@ -25,6 +25,7 @@ const addCoin = async (req, res) => {
   }
 };
 
+// get coins by user Id
 const getCoins = async (req, res) => {
   try {
     const coins = await Coin.findAll({

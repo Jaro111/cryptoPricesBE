@@ -3,7 +3,7 @@ const { Router } = require("express");
 const userRouter = Router();
 
 const { signupUser, getUsers, logIn } = require("./controlers");
-const { hashPass, comparePass } = require("../middleware/auth");
+const { hashPass, comparePass, tokenCheck } = require("../middleware/auth");
 
 // SignUpUser
 userRouter.post("/user/signUp", hashPass, signupUser);
@@ -13,5 +13,8 @@ userRouter.get("/user/getUsers", getUsers);
 
 // logIn
 userRouter.post("/user/logIn", comparePass, logIn);
+
+// token check
+userRouter.get("/users/authCheck", tokenCheck, logIn);
 
 module.exports = userRouter;
