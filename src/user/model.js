@@ -1,4 +1,3 @@
-const { gasConstantDependencies } = require("mathjs");
 const { DataTypes } = require("sequelize");
 
 const sequelize = require("../db/connection");

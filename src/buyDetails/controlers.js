@@ -1,14 +1,25 @@
 const BuyDetails = require("./model");
 const Coin = require("../Coin/model");
+const Portfolio = require("../portfolio/model");
 
 // add buy sell details to coin
 const addBuyDetails = async (req, res) => {
   try {
+    const coin = await Coin.findOne({
+      where: {
+        coinId: req.body.coinId,
+        UserId: req.body.UserId,
+        PortfolioId: req.body.PortfolioId,
+      },
+    });
+    myId = coin.dataValues.id;
+
     const buyDetails = await BuyDetails.create({
-      CoinId: req.body.CoinId,
+      CoinId: myId,
       UserId: req.body.UserId,
       buyPrice: req.body.buyPrice,
       qty: req.body.qty,
+      PortfolioId: req.body.PortfolioId,
     });
     res.status(200).json({ message: "Success", coin: buyDetails });
   } catch (error) {
@@ -16,24 +27,15 @@ const addBuyDetails = async (req, res) => {
   }
 };
 
-// get Coin details by coinmarket capID
+// get Coin details by user and portfolio
 const getDetailsByCoinAnUser = async (req, res) => {
   try {
-    const coin = await Coin.findOne({
-      where: {
-        coinId: req.body.coinId,
-        UserId: req.body.UserId,
-      },
-    });
-
-    myId = coin.dataValues.id;
-
     const buyDetails = await BuyDetails.findAll({
       where: {
         UserId: req.body.UserId,
-        CoinId: myId,
+        PortfolioId: req.body.PortfolioId,
       },
-      include: "Coin",
+      include: ["Coin", "User"],
     });
 
     res.status(200).json({ message: "Success", buyDetails: buyDetails });
