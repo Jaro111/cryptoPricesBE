@@ -2,10 +2,10 @@ const { Router } = require("express");
 
 const portfolioRouter = Router();
 
-const { addPortfolio, getPortfolios } = require("./controllers");
+const { addPortfolio, getPortfolio } = require("./controllers");
 
 portfolioRouter.post("/user/addPortfolio", addPortfolio);
 
-portfolioRouter.post("/user/getPortfolios", getPortfolios);
+portfolioRouter.post("/user/getPortfolio", getPortfolio);
 
 module.exports = portfolioRouter;

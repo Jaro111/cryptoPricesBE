@@ -28,14 +28,22 @@ const syncTables = () => {
   User.hasMany(Coin);
   Coin.belongsTo(User);
 
+  User.hasMany(BuyDetails);
+  BuyDetails.belongsTo(User);
   Coin.hasOne(BuyDetails);
   BuyDetails.belongsTo(Coin);
-  BuyDetails.belongsTo(User);
 
+  User.hasMany(Portfolio);
+  Portfolio.belongsTo(User);
   Portfolio.hasOne(Coin);
   Coin.belongsTo(Portfolio);
-  Portfolio.belongsTo(User);
+  Portfolio.hasOne(BuyDetails);
   BuyDetails.belongsTo(Portfolio);
+
+  // Portfolio.hasOne(Coin);
+  // Coin.belongsTo(Portfolio);
+  // Portfolio.belongsTo(User);
+  // BuyDetails.belongsTo(Portfolio);
 
   User.sync();
   Coin.sync();

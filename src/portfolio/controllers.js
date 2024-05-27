@@ -1,10 +1,12 @@
 const Portfolio = require("./model");
 
 const addPortfolio = async (req, res) => {
-  const portfolios = await Portfolio.findAll();
+  const portfolios = await Portfolio.findAll({
+    where: { UserId: req.body.UserId },
+  });
   const portfolioNo = portfolios.length + 1;
   try {
-    const portfoolio = Portfolio.create({
+    const portfoolio = await Portfolio.create({
       title: `Portfolio${portfolioNo}`,
       UserId: req.body.UserId,
     });
@@ -16,10 +18,10 @@ const addPortfolio = async (req, res) => {
   }
 };
 
-const getPortfolios = async (req, res) => {
+const getPortfolio = async (req, res) => {
   try {
     const portfolios = await Portfolio.findAll({
-      where: { UserId: req.body.UserId, id: req.body.id },
+      where: { UserId: req.body.UserId },
     });
     res.status(200).json({ message: "Uploaded", portfolios: portfolios });
   } catch (error) {
@@ -27,4 +29,4 @@ const getPortfolios = async (req, res) => {
   }
 };
 
-module.exports = { addPortfolio, getPortfolios };
+module.exports = { addPortfolio, getPortfolio };
