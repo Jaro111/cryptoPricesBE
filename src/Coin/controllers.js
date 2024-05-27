@@ -1,5 +1,6 @@
 const Coin = require("./model");
 const User = require("../user/model");
+const Portfolio = require("../portfolio/model");
 
 // addCoin to portfolio
 
@@ -15,6 +16,7 @@ const addCoin = async (req, res) => {
       const coin = await Coin.create({
         coinId: req.body.coinId,
         UserId: req.body.UserId,
+        PortfolioId: req.body.PortfolioId,
       });
       res.status(200).json({ message: "Success", coin: coin });
     } else {

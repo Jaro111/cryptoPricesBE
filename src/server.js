@@ -5,10 +5,12 @@ const commonRouter = require("./common/routes/routes");
 const userRouter = require("./user/routes");
 const coinRouter = require("./Coin/routes");
 const buyDetailsRouter = require("./buyDetails/routes");
+const portfolioRouter = require("./portfolio/routes");
 const port = process.env.PORT || 5001;
 const User = require("./user/model");
 const Coin = require("./Coin/model");
 const BuyDetails = require("./buyDetails/model");
+const Portfolio = require("./portfolio/model");
 
 const app = express();
 
@@ -20,18 +22,33 @@ app.use(userRouter);
 app.use(commonRouter);
 app.use(coinRouter);
 app.use(buyDetailsRouter);
+app.use(portfolioRouter);
 
 const syncTables = () => {
   User.hasMany(Coin);
   Coin.belongsTo(User);
 
+  User.hasMany(BuyDetails);
+  BuyDetails.belongsTo(User);
   Coin.hasOne(BuyDetails);
   BuyDetails.belongsTo(Coin);
-  BuyDetails.belongsTo(User);
+
+  User.hasMany(Portfolio);
+  Portfolio.belongsTo(User);
+  Portfolio.hasOne(Coin);
+  Coin.belongsTo(Portfolio);
+  Portfolio.hasOne(BuyDetails);
+  BuyDetails.belongsTo(Portfolio);
+
+  // Portfolio.hasOne(Coin);
+  // Coin.belongsTo(Portfolio);
+  // Portfolio.belongsTo(User);
+  // BuyDetails.belongsTo(Portfolio);
 
   User.sync();
   Coin.sync();
   BuyDetails.sync();
+  Portfolio.sync();
 };
 
 app.listen(port, () => {
