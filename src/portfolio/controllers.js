@@ -29,4 +29,31 @@ const getPortfolio = async (req, res) => {
   }
 };
 
-module.exports = { addPortfolio, getPortfolio };
+const updatePortfolioName = async (req, res) => {
+  try {
+    const portfolioUpdate = await Portfolio.update(
+      { title: req.body.title },
+      {
+        where: {
+          UserId: req.body.UserId,
+          id: req.body.id,
+        },
+      }
+    );
+
+    const portfolio = await Portfolio.findOne({
+      where: {
+        UserId: req.body.UserId,
+        id: req.body.id,
+      },
+    });
+
+    res
+      .status(200)
+      .json({ message: `Portfolio updated created`, portfolio: portfolio });
+  } catch (error) {
+    res.satus(501).json({ message: error.message, error: error });
+  }
+};
+
+module.exports = { addPortfolio, getPortfolio, updatePortfolioName };

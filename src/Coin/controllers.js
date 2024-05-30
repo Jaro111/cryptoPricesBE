@@ -7,7 +7,11 @@ const Portfolio = require("../portfolio/model");
 const addCoin = async (req, res) => {
   try {
     const coin = await Coin.findOne({
-      where: { UserId: req.body.UserId, coinId: req.body.coinId },
+      where: {
+        UserId: req.body.UserId,
+        coinId: req.body.coinId,
+        PortfolioId: req.body.PortfolioId,
+      },
     });
 
     console.log(coin);
@@ -31,7 +35,7 @@ const addCoin = async (req, res) => {
 const getCoins = async (req, res) => {
   try {
     const coins = await Coin.findAll({
-      where: { UserId: req.body.UserId },
+      where: { UserId: req.body.UserId, PortfolioId: req.body.PortfolioId },
       include: "User",
     });
 
