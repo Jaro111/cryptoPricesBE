@@ -8,7 +8,6 @@ const addBuyDetails = async (req, res) => {
     const coin = await Coin.findOne({
       where: {
         coinId: req.body.coinId,
-        UserId: req.body.UserId,
         PortfolioId: req.body.PortfolioId,
       },
     });
@@ -16,7 +15,6 @@ const addBuyDetails = async (req, res) => {
 
     const buyDetails = await BuyDetails.create({
       CoinId: myId,
-      UserId: req.body.UserId,
       buyPrice: req.body.buyPrice,
       qty: req.body.qty,
       PortfolioId: req.body.PortfolioId,
@@ -32,7 +30,6 @@ const getDetailsByCoinAnUser = async (req, res) => {
   try {
     const buyDetails = await BuyDetails.findAll({
       where: {
-        UserId: req.body.UserId,
         PortfolioId: req.body.PortfolioId,
       },
       include: ["Coin", "User"],

@@ -8,7 +8,6 @@ const addCoin = async (req, res) => {
   try {
     const coin = await Coin.findOne({
       where: {
-        UserId: req.body.UserId,
         coinId: req.body.coinId,
         PortfolioId: req.body.PortfolioId,
       },
@@ -19,7 +18,6 @@ const addCoin = async (req, res) => {
     if (coin === null) {
       const coin = await Coin.create({
         coinId: req.body.coinId,
-        UserId: req.body.UserId,
         PortfolioId: req.body.PortfolioId,
       });
       res.status(200).json({ message: "Success", coin: coin });
@@ -35,8 +33,7 @@ const addCoin = async (req, res) => {
 const getCoins = async (req, res) => {
   try {
     const coins = await Coin.findAll({
-      where: { UserId: req.body.UserId, PortfolioId: req.body.PortfolioId },
-      include: "User",
+      where: { PortfolioId: req.body.PortfolioId },
     });
 
     res.status(200).json({ message: "Coins uploaded", coins: coins });
