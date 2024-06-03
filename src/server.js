@@ -37,11 +37,6 @@ const syncTables = () => {
   Coin.hasOne(BuyDetails);
   BuyDetails.belongsTo(Coin);
 
-  // Portfolio.hasOne(Coin);
-  // Coin.belongsTo(Portfolio);
-  // Portfolio.belongsTo(User);
-  // BuyDetails.belongsTo(Portfolio);
-
   User.sync();
   Portfolio.sync();
   Coin.sync();

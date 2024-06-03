@@ -2,10 +2,10 @@ const { Router } = require("express");
 
 const buyDetailsRouter = Router();
 
-const { addBuyDetails, getDetailsByCoinAnUser } = require("./controlers");
-
+const { addBuyDetails, getBuyDetails } = require("./controlers");
+getBuyDetails;
 buyDetailsRouter.post("/buyDetails/addDetais", addBuyDetails);
 
-buyDetailsRouter.post("/buyDetails/getCoinDetails", getDetailsByCoinAnUser);
+buyDetailsRouter.post("/buyDetails/getBuyDetails", getBuyDetails);
 
 module.exports = buyDetailsRouter;
