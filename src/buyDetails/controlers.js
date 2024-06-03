@@ -73,7 +73,9 @@ const getBuyDetails = async (req, res) => {
       include: ["Coin", "Portfolio"],
     });
 
-    res.status(200).json({ message: "Success", buyDetails: buyDetails });
+    // res.status(200).json({ message: "Success", buyDetails: buyDetails });
+
+    req.buyDetails;
   } catch (error) {
     res.status(500).json({ message: error.message, error: error });
   }

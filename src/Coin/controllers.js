@@ -4,7 +4,7 @@ const Portfolio = require("../portfolio/model");
 
 // addCoin to portfolio
 
-const addCoin = async (req, res) => {
+const addCoin = async (req, res, next) => {
   try {
     const coin = await Coin.findOne({
       where: {
@@ -20,7 +20,9 @@ const addCoin = async (req, res) => {
         coinId: req.body.coinId,
         PortfolioId: req.body.PortfolioId,
       });
-      res.status(200).json({ message: "Success", coin: coin });
+      req.coin = coin;
+      console.log(coin);
+      next();
     } else {
       res.status(500).json({ message: "Coin already in user portfolio" });
     }
