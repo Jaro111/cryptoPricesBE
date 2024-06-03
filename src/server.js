@@ -25,17 +25,17 @@ app.use(portfolioRouter);
 app.use(buyDetailsRouter);
 
 const syncTables = () => {
-  User.hasMany(Portfolio);
+  User.hasOne(Portfolio);
   Portfolio.belongsTo(User);
 
-  Portfolio.hasMany(Coin);
+  Portfolio.hasOne(Coin);
   Coin.belongsTo(Portfolio);
-
-  Portfolio.hasMany(BuyDetails);
-  BuyDetails.belongsTo(Portfolio);
 
   Coin.hasOne(BuyDetails);
   BuyDetails.belongsTo(Coin);
+
+  Portfolio.hasOne(BuyDetails);
+  BuyDetails.belongsTo(Portfolio);
 
   User.sync();
   Portfolio.sync();
