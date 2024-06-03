@@ -9,3 +9,4 @@ buyDetailsRouter.post("/buyDetails/addDetais", addBuyDetails);
 buyDetailsRouter.post("/buyDetails/getBuyDetails", getBuyDetails);
 
 module.exports = buyDetailsRouter;
+//
