@@ -8,9 +8,19 @@ const {
   updateBuyDetails,
 } = require("./controlers");
 
+const {
+  requestMultiple,
+  requestImgPortfolio,
+} = require("../common/functions/functions");
+
 buyDetailsRouter.post("/buyDetails/addDetais", addBuyDetails);
 
-buyDetailsRouter.post("/buyDetails/getBuyDetails", getBuyDetails);
+buyDetailsRouter.post(
+  "/buyDetails/getBuyDetails",
+  getBuyDetails,
+  requestMultiple,
+  requestImgPortfolio
+);
 
 buyDetailsRouter.post("/buyDetails/updateBuyDetails", updateBuyDetails);
 

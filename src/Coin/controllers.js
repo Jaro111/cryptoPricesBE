@@ -32,7 +32,7 @@ const addCoin = async (req, res, next) => {
 };
 
 // get coins by user Id
-const getCoins = async (req, res) => {
+const getCoins = async (req, res, next) => {
   try {
     const coins = await Coin.findAll({
       where: { PortfolioId: req.body.PortfolioId },
