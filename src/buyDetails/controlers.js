@@ -58,7 +58,7 @@ const updateBuyDetails = async (req, res) => {
 };
 
 // get Coin details by coin and portfolio
-const getBuyDetails = async (req, res) => {
+const getBuyDetails = async (req, res, next) => {
   try {
     const coin = await Coin.findOne({
       where: { PortfolioId: req.body.PortfolioId },
@@ -75,7 +75,8 @@ const getBuyDetails = async (req, res) => {
 
     // res.status(200).json({ message: "Success", buyDetails: buyDetails });
 
-    req.buyDetails;
+    req.buyDetails = buyDetails;
+    next();
   } catch (error) {
     res.status(500).json({ message: error.message, error: error });
   }

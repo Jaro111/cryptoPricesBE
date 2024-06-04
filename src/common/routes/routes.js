@@ -21,6 +21,6 @@ commonRouter.get("/getCoinIds", requestCoin);
 commonRouter.post("/getSingleCoin", requestById, requestSingleImage);
 
 // get multiple Coins by id
-commonRouter.post("/getMultipleCoin", requestMultiple, requestImages);
+// commonRouter.post("/getMultipleCoin", requestMultiple, requestImages);
 
 module.exports = commonRouter;
