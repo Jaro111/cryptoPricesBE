@@ -13,18 +13,24 @@ const addCoin = async (req, res, next) => {
       },
     });
 
-    console.log(coin);
-
     if (coin === null) {
       const coin = await Coin.create({
         coinId: req.body.coinId,
         PortfolioId: req.body.PortfolioId,
       });
       req.coin = coin;
-      console.log(coin);
       next();
     } else {
-      res.status(500).json({ message: "Coin already in user portfolio" });
+      const existCoin = await Coin.findOne({
+        where: {
+          coinId: req.body.coinId,
+          PortfolioId: req.body.PortfolioId,
+        },
+        include: "Portfolio",
+      });
+      const portfolioName = existCoin.Portfolio.dataValues.title;
+      res.status(200).json({ message: `Coin already in ${portfolioName}` });
+      return;
     }
   } catch (error) {
     res.status(500).json({ message: error.message, error: error });

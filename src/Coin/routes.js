@@ -9,7 +9,7 @@ const { addBuyDetails } = require("../buyDetails/controlers");
 
 coinRouter.post("/coin/addCoin", addCoin, addBuyDetails);
 
-// get coins by user id
+// get coins by user portfolio
 
 coinRouter.post("/coin/getCoins", getCoins);
 
