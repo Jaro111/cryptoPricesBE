@@ -2,7 +2,7 @@ const BuyDetails = require("./model");
 const Coin = require("../Coin/model");
 const Portfolio = require("../portfolio/model");
 
-// add buy sell details to coin
+// add buy details to coin
 const addBuyDetails = async (req, res) => {
   try {
     const coin = req.coin;
@@ -19,10 +19,14 @@ const addBuyDetails = async (req, res) => {
         coinId: myId,
         PortfolioId: req.body.PortfolioId,
       },
-      include: "Coin",
+      include: ["Coin", "Portfolio"],
     });
 
-    res.status(200).json({ message: "Success", coin: coinDetails });
+    const portfolioName = coinDetails.dataValues.Portfolio.dataValues.title;
+
+    res
+      .status(200)
+      .json({ message: `Added to ${portfolioName}`, coin: coinDetails });
   } catch (error) {
     res.status(500).json({ message: error.message, error: error });
   }

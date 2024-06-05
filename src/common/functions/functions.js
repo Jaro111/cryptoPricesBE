@@ -303,12 +303,7 @@ const requestMultiple = async (req, res, next) => {
         objData[coinDetails[i].coinDetails.Coin.coinId];
       coinDetails[i].coinDetails.idString = idString;
     }
-    console.log(coinDetails);
 
-    // for (let i = 0; i < response.length; i++) {
-    //   response[i].coinDetails = coinDetails[i].coinDetails;y
-    // }
-    // console.log(response);
     req.coinDetails = coinDetails;
     next();
     // res.status(200).json({ message: "message", response: coinDetails });
