@@ -107,16 +107,16 @@ const deleteBuyDetails = async (req, res, next) => {
       },
     });
 
-    await Coin.destroy({
-      where: {
-        PortfolioId: myCoin.dataValues.PortfolioId,
-        id: myCoin.dataValues.id,
-      },
-    });
+    // await Coin.destroy({
+    //   where: {
+    //     PortfolioId: myCoin.dataValues.PortfolioId,
+    //     id: myCoin.dataValues.id,
+    //   },
+    // });
 
-    res.status(200).json({ message: "Success" });
-    // req.myCoin = myCoin;
-    // next();
+    // res.status(200).json({ message: "Success" });
+    req.myCoin = myCoin;
+    next();
   } catch (error) {
     res.status(500).json({ message: error.message, error: error });
   }
