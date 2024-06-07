@@ -50,4 +50,27 @@ const getCoins = async (req, res, next) => {
   }
 };
 
-module.exports = { addCoin, getCoins };
+// Delete Coin
+
+const deleteCoin = async (req, res) => {
+  try {
+    // const myCoin = await Coin.findOne({
+    //   where: { PortfolioId: req.body.PortfolioId, coinId: req.body.coinId },
+    // });
+
+    // myId = myCoin.dataValues.id;
+    const myCoin = req.myCoin;
+
+    await Coin.destroy({
+      where: {
+        PortfolioId: myCoin.dataValues.PortfolioId,
+        id: myCoin.dataValues.id,
+      },
+    });
+    res.status(200).json({ message: "Success" });
+  } catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+  }
+};
+
+module.exports = { addCoin, getCoins, deleteCoin };
