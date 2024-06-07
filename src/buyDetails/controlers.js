@@ -67,6 +67,10 @@ const getBuyDetails = async (req, res, next) => {
     const coin = await Coin.findOne({
       where: { PortfolioId: req.body.PortfolioId },
     });
+    if (coin === null) {
+      res.status(200).json({ message: "Empty", coin: coin });
+      return;
+    }
 
     myId = coin.dataValues.id;
 
@@ -86,4 +90,41 @@ const getBuyDetails = async (req, res, next) => {
   }
 };
 
-module.exports = { addBuyDetails, getBuyDetails, updateBuyDetails };
+// Delete coin and buy detaild
+
+const deleteBuyDetails = async (req, res, next) => {
+  try {
+    const myCoin = await Coin.findOne({
+      where: { PortfolioId: req.body.PortfolioId, coinId: req.body.coinId },
+    });
+
+    myId = myCoin.dataValues.id;
+
+    await BuyDetails.destroy({
+      where: {
+        PortfolioId: req.body.PortfolioId,
+        CoinId: myId,
+      },
+    });
+
+    await Coin.destroy({
+      where: {
+        PortfolioId: myCoin.dataValues.PortfolioId,
+        id: myCoin.dataValues.id,
+      },
+    });
+
+    res.status(200).json({ message: "Success" });
+    // req.myCoin = myCoin;
+    // next();
+  } catch (error) {
+    res.status(500).json({ message: error.message, error: error });
+  }
+};
+
+module.exports = {
+  addBuyDetails,
+  getBuyDetails,
+  updateBuyDetails,
+  deleteBuyDetails,
+};

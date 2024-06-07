@@ -1,5 +1,8 @@
 const Portfolio = require("./model");
+const Coin = require("../Coin/model");
+const BuyDetails = require("../buyDetails/model");
 
+// addPortfolio
 const addPortfolio = async (req, res) => {
   const portfolios = await Portfolio.findAll({
     where: { UserId: req.body.UserId },
@@ -18,17 +21,20 @@ const addPortfolio = async (req, res) => {
   }
 };
 
+// getPortfolio
 const getPortfolio = async (req, res) => {
   try {
     const portfolios = await Portfolio.findAll({
       where: { UserId: req.body.UserId },
     });
+
     res.status(200).json({ message: "Uploaded", portfolios: portfolios });
   } catch (error) {
     res.satus(500).json({ message: error.message, error: error });
   }
 };
 
+// updatePortfolio
 const updatePortfolioName = async (req, res) => {
   try {
     const portfolioUpdate = await Portfolio.update(
@@ -56,4 +62,36 @@ const updatePortfolioName = async (req, res) => {
   }
 };
 
-module.exports = { addPortfolio, getPortfolio, updatePortfolioName };
+// delete portfolio
+const deletePortfolio = async (req, res) => {
+  try {
+    await BuyDetails.destroy({ where: { PortfolioId: req.body.PortfolioId } });
+
+    await Coin.destroy({ where: { PortfolioId: req.body.PortfolioId } });
+
+    const portfolioList = await Portfolio.findAll({
+      where: { UserId: req.body.UserId },
+    });
+    const portfolioLength = portfolioList.length;
+
+    if (portfolioLength > 1) {
+      await Portfolio.destroy({ where: { id: req.body.PortfolioId } });
+      res.status(200).json({ message: "Success" });
+      return;
+    } else {
+      res
+        .status(200)
+        .json({ message: "You need to have at least one portfolio" });
+      return;
+    }
+  } catch (error) {
+    res.satus(501).json({ message: error.message, error: error });
+  }
+};
+
+module.exports = {
+  addPortfolio,
+  getPortfolio,
+  updatePortfolioName,
+  deletePortfolio,
+};
